@@ -1,0 +1,10 @@
+<h1>予定を修正してね</h1>
+
+<%= form_with(model: @task, local: true) do |ans| %>
+    <%= ans.label :content, "新規の予定" %>
+    <%= ans.text_field :content %>
+    
+    <%= ans.submit "再送信" %>
+<% end %>
+
+<% link_to "一覧ページ", "task_path" %>
