@@ -30,7 +30,7 @@ class TasksController < ApplicationController
             redirect_to @task
         else
             flash.now[:danger] ="これだと更新できないなぁ"
-            redirect_to @task
+            render :edit
         end
     end
     def destroy
