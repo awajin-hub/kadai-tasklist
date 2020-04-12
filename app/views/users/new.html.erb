@@ -1,0 +1,21 @@
+<h1>タスクリスト アカウント作成</h1>
+<p>新規ユーザー登録をしよう. <br>名前，メール，パスワードを入力してください．</p>
+
+<%= form_with(model: @user, local: true) do |f| %>
+
+<%= f.label :name, "おなまえ" %>
+<%= f.text_field :name %>
+
+<%= f.label :email, "メールアドレス" %>
+<%= f.email_field :email %>
+
+<%= f.label :password, "パスワード" %>
+<%= f.password_field :password %>
+
+<%= f.label :password_confirmation, "パスワード再入力" %>
+<%= f.password_field :password_confirmation %>
+
+<%= f.submit "sign up" %>
+
+
+<% end %>
