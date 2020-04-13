@@ -1,0 +1,18 @@
+<h1>タスクリストログイン画面</h1>
+
+<p>以下の項目を入力して，ログインしてください．</p>
+
+<%= form_with(url: login_path, scope: :session, local: true) do |f| %>
+
+<%= f.label :email, "メールアドレス" %>
+<%= f.email_field :email %>
+
+<%= f.label :password, "パスワード" %>
+<%= f.password_field :password %>
+
+<%= f.submit "ログイン" %>
+
+<% end %>
+
+<p>アカウントを持っていない方は<%= link_to "こちらでアカウント作成", users_new_path %></p>
+
