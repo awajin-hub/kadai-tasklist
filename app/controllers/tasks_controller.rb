@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
 before_action :require_user_logged_in, only: [:index, :show]
+before_action :correct_user, only:[:destroy]
 
     def index
-       @tasks = Task.all
+       @tasks = current_user.tasks.order(id: :desc)
     end
     def create
-        @task = Task.new(task_params)
+        @task = current_user.tasks.new(task_params)
         
         if @task.save
             flash[:success] = "予定入力完了！"
@@ -25,7 +26,7 @@ before_action :require_user_logged_in, only: [:index, :show]
         @task = Task.find(params[:id])
     end
     def update
-        @task = Task.find(params[:id])
+        @task = current_user.tasks.find(params[:id])
         
         if @task.update(task_params)
             flash[:success] = "予定更新完了"
@@ -36,11 +37,11 @@ before_action :require_user_logged_in, only: [:index, :show]
         end
     end
     def destroy
-        @task = Task.find(params[:id])
+        
         @task.destroy
         
         flash[:success] = "予定は問題なく削除されました"
-        redirect_to tasks_url
+        redirect_to root_path
     end
     
     private
@@ -49,5 +50,12 @@ before_action :require_user_logged_in, only: [:index, :show]
         params.required(:task).permit(:content, :status)
     end
 
+    def correct_user
+        @task = current_user.tasks.find(params[:id])
+        unless @task
+            redirect_to root_url
+        end
+    end
+    
 end
 
