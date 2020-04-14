@@ -11,6 +11,8 @@
 
 <%= link_to "追加のタスクを入力",  new_task_path %>
 
+<%= paginate @tasks %>
+
 <% else %>
     <h1>サインインしてタスクアプリを使おう！</h1>
     <%= link_to "アカウント作成", new_user_path %>

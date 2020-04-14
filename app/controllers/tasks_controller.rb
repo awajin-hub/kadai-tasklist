@@ -3,7 +3,7 @@ before_action :require_user_logged_in, only: [:index, :show]
 before_action :correct_user, only:[:destroy]
 
     def index
-       @tasks = current_user.tasks.order(id: :desc)
+       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
     end
     def create
         @task = current_user.tasks.new(task_params)
