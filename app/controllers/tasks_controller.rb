@@ -26,7 +26,8 @@ before_action :correct_user, only:[:destroy, :show, :edit]
         @task = Task.find(params[:id])
     end
     def update
-        @task = current_user.tasks.find_by(params[:id])
+        @task = Task.find(params[:id])
+        #@task = current_user.tasks.find_by(params[:id])
         
         if @task.update(task_params)
             flash[:success] = "予定更新完了"
