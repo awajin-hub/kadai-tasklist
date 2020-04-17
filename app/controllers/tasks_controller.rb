@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
-before_action :require_user_logged_in, only: [:index, :show]
-before_action :correct_user, only:[:destroy, :show, :edit]
+before_action :set_task, only: [:show, :edit, :update, :destroy]
+before_action :require_user_logged_in, only: [:index, :show, :new, :edit, :create]
+before_action :correct_user, only: [:destroy, :edit]
+#↑にcreateはいれてはならない
 
     def index
        @tasks = current_user.tasks.order(id: :desc).page(params[:page])
@@ -9,7 +11,7 @@ before_action :correct_user, only:[:destroy, :show, :edit]
         @task = current_user.tasks.new(task_params)
         
         if @task.save
-            flash[:success] = "予定入力完了！"
+            flash[:success] = "タスク入力完了！"
             redirect_to @task
         else
             flash.now[:danger] = "再度入力せよ"
@@ -19,18 +21,18 @@ before_action :correct_user, only:[:destroy, :show, :edit]
     def new
         @task = Task.new
     end
+    
     def edit
-        @task = Task.find(params[:id])
     end
+    
     def show
-        @task = Task.find(params[:id])
     end
+    
     def update
-        @task = Task.find(params[:id])
         #@task = current_user.tasks.find_by(params[:id])
         
         if @task.update(task_params)
-            flash[:success] = "予定更新完了"
+            flash[:success] = "タスク更新完了"
             redirect_to @task
         else
             flash.now[:danger] ="これだと更新できないなぁ"
@@ -41,11 +43,15 @@ before_action :correct_user, only:[:destroy, :show, :edit]
         
         @task.destroy
         
-        flash[:success] = "予定は問題なく削除されました"
+        flash[:success] = "タスクは問題なく削除されました"
         redirect_to root_path
     end
     
     private
+    
+    def set_task
+       @task = Task.find(params[:id]) 
+    end
 
     def task_params
         params.required(:task).permit(:content, :status)
