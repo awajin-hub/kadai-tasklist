@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
 before_action :set_task, only: [:show, :edit, :update, :destroy]
 before_action :require_user_logged_in, only: [:index, :show, :new, :edit, :create]
-before_action :correct_user, only: [:destroy, :edit]
+before_action :correct_user, only: [:destroy, :edit, :show]
 #↑にcreateはいれてはならない
 
     def index
