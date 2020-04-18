@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
     private
     
     def require_user_logged_in
-        if !logged_in?
-            redirect_to login_url
-        end
+      if !logged_in?
+        redirect_to login_url
+      end
     end
     
     def counts(user)
