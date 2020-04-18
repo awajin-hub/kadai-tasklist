@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-before_action :set_task, only: [:update]
 before_action :require_user_logged_in, only: [:index, :show, :new]
 before_action :correct_user, only: [:destroy, :show, :edit]
 
@@ -31,8 +30,9 @@ before_action :correct_user, only: [:destroy, :show, :edit]
   end
   
   def update
+    @task = Task.find(params[:id]) 
     #@task = current_user.tasks.find_by(params[:id])
-      
+    
     if @task.update(task_params)
       flash[:success] = "タスク更新完了"
       redirect_to @task
@@ -52,9 +52,6 @@ before_action :correct_user, only: [:destroy, :show, :edit]
   
   private
   
-  def set_task
-    @task = Task.find(params[:id]) 
-  end
 
   def task_params
     params.required(:task).permit(:content, :status)
